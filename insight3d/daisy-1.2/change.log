@@ -1,0 +1,14 @@
+v1.2 - Thursday, July  3, 2008 14:30:44 +0200
+
+	+ removed map_memory_file(.), create_file(.), check_file(.)
+	functions which were not used in daisy computation. compiles in
+	Mac now.
+
+v1.1 - Wednesday, May 28, 2008 14:24:56 +0200
+
+	+ daisy::set_image first casts then normalizes: when trying to set
+	images of type 'const' gcc was complaining
+	+ bug fix for 'makefile install-lib' rule
+	+ convolution made simpler
+
+v1.0 - Sunday, April 20, 2008 21:28:14 +0200

@@ -1,0 +1,29 @@
+#........................................
+packagename := daisy
+description := daisy descriptor
+version := 1.2
+author := Engin Tola
+licence := GPL v2.0 or higher distributed by FSF
+#........................................
+sources := daisy.cpp main.cpp fileio.cpp general.cpp interaction.cpp math.cpp matrix_manipulation.cpp
+#........................................
+installdir := /home/tola/usr
+external_sources :=
+external_libraries := opencv
+libdir := lib
+srcdir := src
+includedir:= include
+#........................................
+optimize := true
+parallelize := false
+f77 := false
+sse := false
+multi-threading := false
+profile := false
+#........................................
+specialize := false
+platform := native
+#........................................
+include $(MAKEFILE_HEAVEN)/static-variables.makefile
+include $(MAKEFILE_HEAVEN)/flags.makefile
+include $(MAKEFILE_HEAVEN)/rules.makefile

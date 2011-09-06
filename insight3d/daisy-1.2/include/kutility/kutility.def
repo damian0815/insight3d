@@ -1,0 +1,214 @@
+////////////////////////////////////////////////////////////////////////////////
+// This program is free software; you can redistribute it                     //
+// and/or modify it under the terms of the GNU General Public License         //
+// version 2 (or higher) as published by the Free Software Foundation.        //
+//                                                                            //
+// This program is distributed in the hope that it will be useful, but        //
+// WITHOUT ANY WARRANTY; without even the implied warranty of                 //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU          //
+// General Public License for more details.                                   //
+//                                                                            //
+// Written and (C) by                                                         //
+// Engin Tola                                                                 //
+//                                                                            //
+// web   : http://cvlab.epfl.ch/~tola/                                        //
+// email : engin.tola@epfl.ch                                                 //
+//                                                                            //
+// If you use this code for research purposes, please refer to the            //
+// webpage above                                                              //
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef KUTILITY_DEF_H
+#define KUTILITY_DEF_H
+
+#include "cv.h"
+#include "highgui.h"
+
+#include <vector>
+#include <climits>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+#include <cmath>
+
+// pi/180
+#define RADIAN 0.017453292519943
+// 180/pi
+#define DEGREE 57.295779513082323
+
+typedef float REAL;
+#define DFLOAT
+
+#ifdef  DFLOAT
+#define LOWEST_POSITIVE 1.0e-30
+ // ln( LOWEST_POSITIVE )
+#define LOG_LOWEST_POSITIVE -69.0776
+#define MOST_NEGATIVE -1.0e30
+#define MOST_POSITIVE 1.0e30
+ // - ln ( LOWEST_POSITIVE );
+#define MOST_POSITIVE_COST 69.0776
+#endif
+
+#ifdef  DDOUBLE
+#define LOWEST_POSITIVE 1.0e-300
+#define LOG_LOWEST_POSITIVE -690.7755
+#define MOST_NEGATIVE -1.0e300
+#define MOST_POSITIVE 1.0e300
+// - ln ( LOWEST_POSITIVE );
+#define MOST_POSITIVE_COST -690.7755
+#endif
+
+#ifndef uchar
+typedef unsigned char uchar;
+#endif
+
+namespace kutility
+{
+   template<class T>
+   class rectangle
+   {
+   public:
+      T lx, ux, ly, uy;
+      T dx, dy;
+      rectangle(T xl, T xu, T yl, T yu) { lx=xl; ux=xu; ly=yl; uy=yu; dx=ux-lx; dy=uy-ly; };
+      rectangle()                       { lx = ux = ly = uy = dx = dy = 0; };
+   };
+
+
+/// equality = 0 -> NN <  <
+/// equality = 1 -> NE <  <=
+/// equality = 2 -> EN <= <
+/// equality = 3 -> EE <= <=
+   enum{ NN,NE,EN,EE };
+
+   /// checks if the number x is between lx - ux interval.
+   /// the equality is checked depending on the value of le and ue parameters.
+   /// if le=1 => lx<=x is checked else lx<x is checked
+   /// if ue=1 => x<=ux is checked else x<ux is checked
+   /// by default x is searched inside of [lx,ux)
+   template<class T1, class T2, class T3> inline
+   bool is_inside(T1 x, T2 lx, T3 ux, bool le=true, bool ue=false)
+   {
+      if( ( ((lx<x)&&(!le)) || ((lx<=x)&&le) ) && ( ((x<ux)&&(!ue)) || ((x<=ux)&&ue) )    )
+      {
+         return true;
+      }
+      else
+      {
+         return false;
+      }
+   }
+
+   /// checks if the number x is between lx - ux and/or y is between ly - uy interval.
+   /// If the number is inside, then function returns true, else it returns false.
+   /// the equality is checked depending on the value of le and ue parameters.
+   /// if le=1 => lx<=x is checked else lx<x is checked
+   /// if ue=1 => x<=ux is checked else x<ux is checked
+   /// by default x is searched inside of [lx,ux).
+   /// the same equality check is applied to the y variable as well.
+   /// If the 'oper' is set '&' both of the numbers must be within the interval to return true
+   /// But if the 'oper' is set to '|' then only one of them being true is sufficient.
+   template<class T1, class T2, class T3> inline
+   bool is_inside(T1 x, T2 lx, T3 ux, T1 y, T2 ly, T3 uy, bool le=true, bool ue=false, char oper='&')
+   {
+      switch( oper )
+      {
+      case '|':
+         if( is_inside(x,lx,ux,le,ue) || is_inside(y,ly,uy,le,ue) )
+            return true;
+         return false;
+
+      default:
+         if( is_inside(x,lx,ux,le,ue) && is_inside(y,ly,uy,le,ue) )
+            return true;
+         return false;
+      }
+   }
+
+   /// checks if the number x is between lx - ux and/or y is between ly - uy interval.
+   /// If the number is inside, then function returns true, else it returns false.
+   /// the equality is checked depending on the value of le and ue parameters.
+   /// if le=1 => lx<=x is checked else lx<x is checked
+   /// if ue=1 => x<=ux is checked else x<ux is checked
+   /// by default x is searched inside of [lx,ux).
+   /// the same equality check is applied to the y variable as well.
+   /// If the 'oper' is set '&' both of the numbers must be within the interval to return true
+   /// But if the 'oper' is set to '|' then only one of them being true is sufficient.
+   template<class T1, class T2> inline
+   bool is_inside(T1 x, T1 y, rectangle<T2> roi, bool le=true, bool ue=false, char oper='&')
+   {
+      switch( oper )
+      {
+      case '|':
+         if( is_inside(x,roi.lx,roi.ux,le,ue) || is_inside(y,roi.ly,roi.uy,le,ue) )
+            return true;
+         return false;
+
+      default:
+         if( is_inside(x,roi.lx,roi.ux,le,ue) && is_inside(y,roi.ly,roi.uy,le,ue) )
+            return true;
+         return false;
+      }
+   }
+
+
+   /// checks if the number x is outside lx - ux interval
+   /// the equality is checked depending on the value of le and ue parameters.
+   /// if le=1 => lx>x is checked else lx>=x is checked
+   /// if ue=1 => x>ux is checked else x>=ux is checked
+   /// by default is x is searched outside of [lx,ux)
+   template<class T1, class T2, class T3> inline
+   bool is_outside(T1 x, T2 lx, T3 ux, bool le=true, bool ue=false)
+   {
+      return !(is_inside(x,lx,ux,le,ue));
+   }
+
+   /// checks if the numbers x and y is outside their intervals.
+   /// The equality is checked depending on the value of le and ue parameters.
+   /// If le=1 => lx>x is checked else lx>=x is checked
+   /// If ue=1 => x>ux is checked else x>=ux is checked
+   /// By default is x is searched outside of [lx,ux) (Similarly for y)
+   /// By default, 'oper' is set to OR. If one of them is outside it returns
+   /// true otherwise false.
+   template<class T1, class T2, class T3> inline
+   bool is_outside(T1 x, T2 lx, T3 ux, T1 y, T2 ly, T3 uy, bool le=true, bool ue=false, char oper='|')
+   {
+      switch( oper )
+      {
+      case '&':
+         if( is_outside(x,lx,ux,le,ue) && is_outside(y,ly,uy,le,ue) )
+            return true;
+         return false;
+      default:
+         if( is_outside(x,lx,ux,le,ue) || is_outside(y,ly,uy,le,ue) )
+            return true;
+         return false;
+      }
+   }
+
+   /// checks if the numbers x and y is outside their intervals.
+   /// The equality is checked depending on the value of le and ue parameters.
+   /// If le=1 => lx>x is checked else lx>=x is checked
+   /// If ue=1 => x>ux is checked else x>=ux is checked
+   /// By default is x is searched outside of [lx,ux) (Similarly for y)
+   /// By default, 'oper' is set to OR. If one of them is outside it returns
+   /// true otherwise false.
+   template<class T1, class T2> inline
+   bool is_outside(T1 x, T1 y, rectangle<T2> roi, bool le=true, bool ue=false, char oper='|')
+   {
+      switch( oper )
+      {
+      case '&':
+         if( is_outside(x,roi.lx,roi.ux,le,ue) && is_outside(y,roi.ly,roi.uy,le,ue) )
+            return true;
+         return false;
+      default:
+         if( is_outside(x,roi.lx,roi.ux,le,ue) || is_outside(y,roi.ly,roi.uy,le,ue) )
+            return true;
+         return false;
+      }
+   }
+}
+
+#endif

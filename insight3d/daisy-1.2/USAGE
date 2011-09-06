@@ -1,0 +1,173 @@
+--------------------------------------------------------------------------------
+
+AUTHOR:
+
+Engin Tola
+
+--------------------------------------------------------------------------------
+
+CONTACT:
+
+web   : http://cvlab.epfl.ch/~tola
+email : engin.tola@epfl.ch
+
+--------------------------------------------------------------------------------
+
+LICENCE:
+
+Source code is available under the GNU General Public License. In short, if you
+distribute a software that uses DAISY, you have to distribute it under GPL with
+the source code. Another option is to contact us to purchase a commercial
+license. For a copy of the GPL: http://www.gnu.org/copyleft/gpl.html
+
+If you use this code in your research please give a reference to
+
+"A fast local descriptor for dense matching" by Engin Tola, Vincent Lepetit, and
+Pascal Fua. Computer Vision and Pattern Recognition, Alaska, USA, June 2008
+
+--------------------------------------------------------------------------------
+
+CONTEXT
+
+DAISY is a local image descriptor designed for dense wide-baseline matching
+purposes. For more details about the descriptor please read the paper.
+
+--------------------------------------------------------------------------------
+
+SOFTWARE
+
+There's a main.cpp file under ./src/ directory for an example code. You can
+inspect it on how to use the daisy class. However, this software is intended to
+be used as a library and has more various operation modes in that form.
+
+1. To build the example application code run
+
+   make
+   ./daisy
+
+2. To build the library, remove src/main.cpp from the 'sources' list in the
+makefile and run
+
+   make library
+
+This will generate the libdaisy.a file under ./lib directory. To install this to
+your system, run
+
+   make install-lib
+
+This will install the library to 'installdir' in your makefile. This command
+also generates the daisy.pc file which is installed to
+'$(installdir)/lib/pkgconfig/'. The pkg-config[1] utility can be used to include
+daisy to your projects with
+
+   CFLAGS+=`pkg-config --cflags daisy`
+   LDFLAGS+=`pkg-config --libs daisy`
+
+In your source file, include 'daisy/daisy.h' to use the library.
+
+3. The code is documented as per Doxygen[3] standards and a Doxyfile is supplied
+in the library. To generate the documentation, run
+
+   doxygen Doxyfile
+   or
+   make dox
+
+You can reach the html documentation under './doc/html/index.html'
+
+The software uses opencv[2] to load images in the main.cpp but the library is
+free of opencv. Opencv is included/linked using the pkg-config utility and if
+you don't have pkg-config you should either install it or change the makefile
+accordingly.
+
+4. To enable debugging for the library change the 'optimize = true' to 'optimize = false'
+in the makefile.
+
+5. Library can be compiled with OpenMP[4] for parallel processing. To enable
+this, change 'parallelize = false' to 'parallelize = true' in the makefile. When
+the optimize flag is set to false then parallelization is disabled also.
+
+[1] pkg-config : http://pkg-config.freedesktop.org/wiki/
+[2] opencv     : http://sourceforge.net/projects/opencvlibrary/
+[3] doxygen    : http://www.stack.nl/~dimitri/doxygen/
+[4] openmp     : http://www.openmp.org/
+
+--------------------------------------------------------------------------------
+
+USAGE
+
+----
+
+The library basically has two operation modes.
+
+MODE 1. In the first case, you can precompute the descriptors at every point with
+
+   daisy* desc = new daisy();
+   desc->set_image(im,h,w);
+   desc->verbose( verbose_level ); // 0,1,2,3 -> how much output do you want while running
+   desc->set_parameters(rad, radq, thq, histq); // default values are 15,3,8,8
+   desc->initialize_single_descriptor_mode();
+   desc->compute_descriptors(); // precompute all the descriptors
+
+and get the specific descriptor at a point (y,x) with
+
+   float* thor = NULL;
+   desc->get_descriptor(y,x,thor);
+
+Here, you can get the descriptors at only integer y,x values.
+
+MODE 2. You can also precompute orientation layers with
+
+   daisy* desc = new daisy();
+   desc->set_image(im,h,w);
+   desc->verbose( verbose_level ); // 0,1,2,3 -> how much output do you want while running
+   desc->set_parameters(rad, radq, thq, histq); // default values are 15,3,8,8
+   desc->initialize_single_descriptor_mode();
+
+a) get the descriptor at floating point locations with any orientation as
+
+   float* thor = new thor[desc->descriptor_size()];
+   desc->get_descriptor(y,x,orientation,thor);
+
+   orientation in [0 360)
+
+b) or get the descriptor with a warped grid
+
+   float* thor = new thor[desc->descriptor_size()];
+   desc->get_descriptor(y,x,orientation, H, thor);
+
+   here H (float H[9]) is a homography matrix used to warp the grid of daisy and
+   (y,x) is on the unwarped image. You can use this function in the case where
+   you have two images and you want to compare the descriptors of two
+   corresponding points which are related with a planar transformation. The
+   transformation is encoded with a Homography matrix.
+
+   orientation in [0 360)
+
+c) or you can pass your own grid
+
+   float* thor = new thor[desc->descriptor_size()];
+   desc->get_descriptor(custom_grid, orientation, thor);
+
+   orientation in [0 360)
+
+   custom_grid is of type : float custom_grid[2*m_grid_point_number]
+   where m_grid_point_number = (radq*thq+1)*histq
+
+  NOTE: this function will probably change in the next version as it's not very
+  general.
+
+----
+
+  It is possible to set the memory of the library from outside to let the user
+  call the library in a loop without allocating/deallocating the necessary
+  space. The functions for this are :
+
+  void set_descriptor_memory(float *descriptor, long int d_size)
+  void set_workspace_memory (float *workspace,  long int w_size)
+
+  the size of the workspace is desc->grid_point_number()* w * h and
+  the size of the descriptor space is   w*h*desc->descriptor_size();
+
+  if you're not running the library in MODE_1 you don't need to set the
+  descriptor memory. In fact, you should not set it cause it'll be a waste.
+

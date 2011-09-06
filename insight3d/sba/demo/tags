@@ -1,0 +1,77 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7	//
+BA_MOT	eucsbademo.h	8;"	d
+BA_MOTSTRUCT	eucsbademo.h	7;"	d
+BA_MOT_MOTSTRUCT	eucsbademo.h	10;"	d
+BA_NONE	eucsbademo.h	6;"	d
+BA_STRUCT	eucsbademo.h	9;"	d
+CLOCKS_PER_MSEC	eucsbademo.c	13;"	d	file:
+FULLCOV	readparams.c	20;"	d	file:
+MAXITER	eucsbademo.c	15;"	d	file:
+MAXSTRLEN	readparams.c	10;"	d	file:
+NOCOV	readparams.c	19;"	d	file:
+SBA_MAX_REPROJ_ERROR	eucsbademo.h	4;"	d
+SKIP_LINE	readparams.c	13;"	d	file:
+TRICOV	readparams.c	21;"	d	file:
+_READPARAMS_H_	readparams.h	2;"	d
+_SBA_DEMO_H_	eucsbademo.h	2;"	d
+calcImgProj	imgproj.c	/^void calcImgProj(double a[5],double v[3],double t[3],double M[3],double n[2])$/;"	f
+calcImgProjJacKRT	imgproj.c	/^void calcImgProjJacKRT(double a[5],double v[3],double t[3],double M[3],$/;"	f
+calcImgProjJacKRTS	imgproj.c	/^void calcImgProjJacKRTS(double a[5],double v[3],double t[3],double M[3],$/;"	f
+calcImgProjJacRT	imgproj.c	/^void calcImgProjJacRT(double a[5],double v[3],double t[3],double M[3],$/;"	f
+calcImgProjJacRTS	imgproj.c	/^void calcImgProjJacRTS(double a[5],double v[3],double t[3],double M[3],$/;"	f
+calcImgProjJacS	imgproj.c	/^void calcImgProjJacS(double a[5],double v[3],double t[3],double M[3],$/;"	f
+camparams	eucsbademo.c	/^	double *camparams; \/* needed only when bundle adjusting for structure parameters only *\/$/;"	m	struct:globs_	file:
+cnp	eucsbademo.c	/^  int cnp, pnp, mnp; \/* dimensions *\/$/;"	m	struct:globs_	file:
+countNDoubles	readparams.c	/^static int countNDoubles(FILE *fp)$/;"	f	file:
+findNcameras	readparams.c	/^static int findNcameras(FILE *fp)$/;"	f	file:
+globs	eucsbademo.c	/^} globs;$/;"	v	typeref:struct:globs_
+globs_	eucsbademo.c	/^struct globs_{$/;"	s	file:
+img_projKRT	eucsbademo.c	/^static void img_projKRT(int j, int i, double *aj, double *xij, void *adata)$/;"	f	file:
+img_projKRTS	eucsbademo.c	/^static void img_projKRTS(int j, int i, double *aj, double *bi, double *xij, void *adata)$/;"	f	file:
+img_projKRTS_jac	eucsbademo.c	/^static void img_projKRTS_jac(int j, int i, double *aj, double *bi, double *Aij, double *Bij, void *adata)$/;"	f	file:
+img_projKRT_jac	eucsbademo.c	/^static void img_projKRT_jac(int j, int i, double *aj, double *Aij, void *adata)$/;"	f	file:
+img_projKS	eucsbademo.c	/^static void img_projKS(int j, int i, double *bi, double *xij, void *adata)$/;"	f	file:
+img_projKS_jac	eucsbademo.c	/^static void img_projKS_jac(int j, int i, double *bi, double *Bij, void *adata)$/;"	f	file:
+img_projRT	eucsbademo.c	/^static void img_projRT(int j, int i, double *aj, double *xij, void *adata)$/;"	f	file:
+img_projRTS	eucsbademo.c	/^static void img_projRTS(int j, int i, double *aj, double *bi, double *xij, void *adata)$/;"	f	file:
+img_projRTS_jac	eucsbademo.c	/^static void img_projRTS_jac(int j, int i, double *aj, double *bi, double *Aij, double *Bij, void *adata)$/;"	f	file:
+img_projRT_jac	eucsbademo.c	/^static void img_projRT_jac(int j, int i, double *aj, double *Aij, void *adata)$/;"	f	file:
+img_projS	eucsbademo.c	/^static void img_projS(int j, int i, double *bi, double *xij, void *adata)$/;"	f	file:
+img_projS_jac	eucsbademo.c	/^static void img_projS_jac(int j, int i, double *bi, double *Bij, void *adata)$/;"	f	file:
+img_projsKRTS_jac_x	eucsbademo.c	/^static void img_projsKRTS_jac_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *jac, void *adata)$/;"	f	file:
+img_projsKRTS_x	eucsbademo.c	/^static void img_projsKRTS_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *hx, void *adata)$/;"	f	file:
+img_projsKRT_jac_x	eucsbademo.c	/^static void img_projsKRT_jac_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *jac, void *adata)$/;"	f	file:
+img_projsKRT_x	eucsbademo.c	/^static void img_projsKRT_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *hx, void *adata)$/;"	f	file:
+img_projsKS_jac_x	eucsbademo.c	/^static void img_projsKS_jac_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *jac, void *adata)$/;"	f	file:
+img_projsKS_x	eucsbademo.c	/^static void img_projsKS_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *hx, void *adata)$/;"	f	file:
+img_projsRTS_jac_x	eucsbademo.c	/^static void img_projsRTS_jac_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *jac, void *adata)$/;"	f	file:
+img_projsRTS_x	eucsbademo.c	/^static void img_projsRTS_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *hx, void *adata)$/;"	f	file:
+img_projsRT_jac_x	eucsbademo.c	/^static void img_projsRT_jac_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *jac, void *adata)$/;"	f	file:
+img_projsRT_x	eucsbademo.c	/^static void img_projsRT_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *hx, void *adata)$/;"	f	file:
+img_projsS_jac_x	eucsbademo.c	/^static void img_projsS_jac_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *jac, void *adata)$/;"	f	file:
+img_projsS_x	eucsbademo.c	/^static void img_projsS_x(double *p, struct sba_crsm *idxij, int *rcidxs, int *rcsubs, double *hx, void *adata)$/;"	f	file:
+intrcalib	eucsbademo.c	/^	double *intrcalib; \/* the 5 intrinsic calibration parameters in the order [fu, u0, v0, ar, skew],$/;"	m	struct:globs_	file:
+main	eucsbademo.c	/^int main(int argc, char *argv[])$/;"	f
+mnp	eucsbademo.c	/^  int cnp, pnp, mnp; \/* dimensions *\/$/;"	m	struct:globs_	file:
+nccalib	eucsbademo.c	/^  int nccalib; \/* number of calibration parameters that must be kept constant.$/;"	m	struct:globs_	file:
+pnp	eucsbademo.c	/^  int cnp, pnp, mnp; \/* dimensions *\/$/;"	m	struct:globs_	file:
+printSBAData	readparams.c	/^void printSBAData(double *motstruct, int cnp, int pnp, int mnp, $/;"	f
+printSBAMotionData	readparams.c	/^void printSBAMotionData(double *motstruct, int ncams, int cnp,$/;"	f
+printSBAStructureData	readparams.c	/^void printSBAStructureData(double *motstruct, int ncams, int n3Dpts, int cnp, int pnp)$/;"	f
+ptparams	eucsbademo.c	/^	double *ptparams; \/* needed only when bundle adjusting for camera parameters only *\/$/;"	m	struct:globs_	file:
+quat2vec	eucsbademo.c	/^void quat2vec(double *inp, int nin, double *outp, int nout)$/;"	f
+readCalibParams	readparams.c	/^void readCalibParams(char *fname, double ical[9])$/;"	f
+readCameraParams	readparams.c	/^static void readCameraParams(FILE *fp, int cnp,$/;"	f	file:
+readInitialSBAEstimate	readparams.c	/^void readInitialSBAEstimate(char *camsfname, char *ptsfname, int cnp, int pnp, int mnp,$/;"	f
+readNDoubles	readparams.c	/^static int readNDoubles(FILE *fp, double *vals, int nvals)$/;"	f	file:
+readNInts	readparams.c	/^static int readNInts(FILE *fp, int *vals, int nvals)$/;"	f	file:
+readNpointsAndNprojections	readparams.c	/^static void readNpointsAndNprojections(FILE *fp, int *n3Dpts, int pnp, int *nprojs, int mnp, int *havecov)$/;"	f	file:
+readPointParamsAndProjections	readparams.c	/^static void readPointParamsAndProjections(FILE *fp, double *params, int pnp, double *projs, double *covprojs,$/;"	f	file:
+sba_driver	eucsbademo.c	/^void sba_driver(char *camsfname, char *ptsfname, char *calibfname, int cnp, int pnp, int mnp,$/;"	f
+skipNDoubles	readparams.c	/^static int skipNDoubles(FILE *fp, int nvals)$/;"	f	file:
+vec2quat	eucsbademo.c	/^void vec2quat(double *inp, int nin, double *outp, int nout)$/;"	f
